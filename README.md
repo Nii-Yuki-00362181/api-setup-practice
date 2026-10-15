@@ -1,119 +1,31 @@
-# API開発スターターキット (Tutorial 13)
+# api-setup-practice
 
-このリポジトリは、API開発カリキュラム（Tutorial 13）のハンズオンで使用するスターターキットです。
-Laravel 10.x と Laravel Sail (Docker) を使用した開発環境が構築されています。
+## 概要
 
-## ✅ 前提条件
+COACHTECH 教材 Tutorial 11-1「API開発環境の構築と疎通確認」で作成した成果物です。
 
-* **Docker Desktop** がインストールされ、起動していること。
-* **Git** がインストールされていること。
+API 開発環境を構築し、 /api/hello エンドポイントを介して JSON レスポンスを返す REST API の疎通確認を実施したアプリケーションです。
 
-## 🚀 環境構築手順
+## 使用技術
 
-ターミナル（Windowsの場合はWSL2またはGit Bash推奨）を開き、以下の手順で環境を構築してください。
+- PHP 8.2
+- Laravel 10.x
+- REST API（JSONレスポンス）
+- Postman（動作確認）
 
-### 1. リポジトリのクローン
-まずはプロジェクトをローカルにダウンロードします。
+## 学んだこと
 
-```bash
-git clone https://github.com/coachtech-material/laravel-api-starter-forTutorial13.git
-cd laravel-api-starter-forTutorial13
-```
+- routes/api.php を使用した API ルーティングの設定方法と、自動付与される /api プレフィックスの仕組み
+- response()->json() ヘルパー関数を使用した構造化 JSON レスポンスの返却方法
+- Postmanを使用した API リクエスト送信とレスポンス確認
 
-### 2. 依存パッケージのインストール
+## 動作確認
 
-Dockerを使用してComposerパッケージをインストールします。ローカルにPHPやComposerがなくても実行可能です。
-
-**Mac / Linux の場合:**
-
-```bash
-docker run --rm \
-    -u "$(id -u):$(id -g)" \
-    -v "$(pwd):/var/www/html" \
-    -w /var/www/html \
-    laravelsail/php82-composer:latest \
-    composer install --ignore-platform-reqs
-```
-
-**Windows (PowerShell) の場合:**
-
-```powershell
-docker run --rm `
-    -v "${PWD}:/var/www/html" `
-    -w /var/www/html `
-    laravelsail/php82-composer:latest `
-    composer install --ignore-platform-reqs
-```
-
-### 3. 環境設定ファイルの作成
-
-`.env.example` をコピーして `.env` ファイルを作成します。
-
-```bash
-cp .env.example .env
-```
-
-### 4. Docker環境の起動 (Laravel Sail)
-
-コンテナを起動します。初回はイメージのビルドに数分かかる場合があります。
-
-```bash
-./vendor/bin/sail up -d
-```
-
-### 5. アプリケーションキーの生成
-
-Laravelの暗号化キーを生成します。
-
-```bash
-./vendor/bin/sail artisan key:generate
-```
-
-### 6. データベースの準備 (マイグレーション & シーダー)
-
-テーブルを作成し、テストデータを投入します。
-
-```bash
-./vendor/bin/sail artisan migrate:fresh --seed
-```
-
-### 7. 動作確認
-
-ブラウザで以下のURLにアクセスしてください。LaravelのWelcomeページが表示されれば構築完了です。
-
-* URL: http://localhost
-
----
-
-## 📝 開発のヒント
-
-### テストユーザーについて
-
-シーダー (`UserSeeder`) により、以下のテストユーザーが自動的に作成されています。認証機能は実装されていませんが、タスクの所有者 (`user_id`) としてこのIDを使用します。
-
-* **User ID**: `1`
-* **Name**: `Test User`
-* **Email**: `test@example.com`
-
-### サンプルタスクについて
-
-シーダー (`TaskSeeder`) により、テストユーザー（ID: 1）に紐づくサンプルタスクが5件作成されています。
-
-### 開発フロー
-
-Tutorial 13のハンズオンでは、主に以下のファイルを編集・作成します。
-
-1. **ルーティング**: `routes/api.php`
-2. **コントローラー**: `app/Http/Controllers/Api/` (新規作成)
-3. **APIリソース**: `app/Http/Resources/` (新規作成)
-
-### よく使うコマンド
-
-* **コンテナの起動**: `./vendor/bin/sail up -d`
-* **コンテナの停止**: `./vendor/bin/sail down`
-* **Artisanコマンド**: `./vendor/bin/sail artisan ...`
-* **ログの確認**: `./vendor/bin/sail logs -f`
-
-### APIテストツール
-
-本カリキュラムでは、VSCode拡張機能の **Thunder Client** を使用して動作確認を行います。
+- sail up -d で環境の起動
+- sail artisan migrate:fresh --seed でデータベースを初期化
+- Postmanで GET http://localhost/api/hello にアクセス
+- ステータスコード 200 OK と共に、以下の JSON レスポンスが返却されることを確認
+  json
+  {
+  "message": "Hello, API!"
+  }
