@@ -25,7 +25,8 @@ API 開発環境を構築し、 /api/hello エンドポイントを介して JSO
 - sail artisan migrate:fresh --seed でデータベースを初期化
 - Postmanで GET http://localhost/api/hello にアクセス
 - ステータスコード 200 OK と共に、以下の JSON レスポンスが返却されることを確認
-  json
-  {
-  "message": "Hello, API!"
-  }
+
+    json
+    {
+    "message": "Hello, API!"
+    }
